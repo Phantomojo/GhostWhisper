@@ -1,0 +1,20 @@
+[2025-06-01T08:58:05.187692] [INFO] Created cli/ghostwhisper.py with argparse structure
+[2025-06-01T08:58:05.187810] [REASONING] Click not used to minimize dependency tree
+[2025-06-01T08:58:05.189024] [EXECUTION] User ran: ghostwhisper send --to http://localhost --via http --message "Hello"
+[2025-06-01T08:58:05.189113] [INFO] Created Message object with sender=user, receiver=http://localhost
+[2025-06-01T08:58:05.189139] [ROUTER] Using 'http' transport\n[2025-06-01T08:58:05.189211] [ROUTER] Message sent via http transport\n[2025-06-01T08:58:05.189857] [INFO] Created Message object with sender=alice, receiver=bob
+[2025-06-01T08:58:05.189948] [INFO] Serialized Message object to JSON
+[2025-06-01T08:58:05.189987] [INFO] Created Message object with sender=alice, receiver=bob
+[2025-06-01T08:58:05.190002] [INFO] Deserialized JSON to Message object with sender=alice, receiver=bob
+[2025-06-01T08:58:05.190092] [INFO] Created Message object with sender=alice, receiver=bob
+[2025-06-01T08:58:05.190434] [ROUTER] Using 'http' transport\n[2025-06-01T08:58:05.190744] [ROUTER] Message sent via http transport\n[2025-06-01T08:58:05.190876] [INFO] Created Message object with sender=alice, receiver=bob
+[2025-06-01T08:58:05.191330] [ROUTER] Using 'localpipe' transport\n[2025-06-01T08:58:05.191654] [ROUTER] Message sent via localpipe transport\n[2025-06-01T08:58:05.191793] [INFO] Created Message object with sender=alice, receiver=bob
+[2025-06-01T08:58:05.192052] [ROUTER] Using 'qr' transport\n[2025-06-01T08:58:05.192289] [ROUTER] Message sent via qr transport\n[2025-06-01T08:58:05.192429] [INFO] Created Message object with sender=alice, receiver=bob
+[2025-06-01T08:58:05.192689] [ROUTER] Using 'smtp' transport\n[2025-06-01T08:58:05.193000] [ROUTER] Message sent via smtp transport\n[2025-06-01T08:58:05.193125] [INFO] Created Message object with sender=alice, receiver=bob
+[2025-06-01T08:58:05.193162] [ROUTER] Using 'unknown' transport\n[2025-06-01T08:58:05.193201] [ERROR] Unknown transport method: unknown\n[2025-06-01T08:58:05.193301] [INFO] Created Message object with sender=alice, receiver=http://localhost
+[2025-06-01T08:58:05.193574] [INFO] Serialized Message object to JSON
+[2025-06-01T08:58:05.193671] [TRANSPORT] Attempt 1 failed: Network error\n[2025-06-01T08:58:06.195233] [TRANSPORT] Attempt 2 failed: Network error\n[2025-06-01T08:58:08.197785] [TRANSPORT] Attempt 3 failed: Network error\n[2025-06-01T08:58:08.197951] [ERROR] Failed to send message via HTTP after 3 attempts: Network error\n[2025-06-01T08:58:08.198276] [INFO] Created Message object with sender=alice, receiver=http://localhost
+[2025-06-01T08:58:08.199307] [INFO] Serialized Message object to JSON
+[2025-06-01T08:58:08.199457] [TRANSPORT] Sent message to http://localhost via POST on attempt 1\n[2025-06-01T08:58:08.199584] [INFO] Created Message object with sender=alice, receiver=http://localhost
+[2025-06-01T08:58:08.200118] [INFO] Created Message object with sender=alice, receiver=http://localhost
+[2025-06-01T08:58:08.200728] [INFO] Created Message object with sender=alice, receiver=http://localhost
