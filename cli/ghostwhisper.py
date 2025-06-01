@@ -1,6 +1,7 @@
 import argparse
 import sys
 import os
+import subprocess
 from core.router import route_message
 from core.message import Message
 from datetime import datetime
@@ -10,7 +11,7 @@ LOG_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 def log_devlog(entry: str):
     timestamp = datetime.utcnow().isoformat()
     with open(LOG_PATH, 'a', encoding='utf-8') as f:
-        f.write(f"[{timestamp}] {entry}\n")
+        f.write(f"[{timestamp}] {entry}\\n")
 
 def main():
     log_devlog("[INFO] Created cli/ghostwhisper.py with argparse structure")
@@ -27,7 +28,7 @@ def main():
 
     # listen command
     listen_parser = subparsers.add_parser('listen', help='Listen for incoming messages')
-    listen_parser.add_argument('--via', required=True, choices=['http', 'smtp', 'qr', 'localpipe'], help='Transport method')
+    listen_parser.add_argument('--port', type=int, default=8000, help='Port to run the listener on (default 8000)')
 
     args = parser.parse_args()
 
@@ -39,12 +40,30 @@ def main():
             content=args.message,
             timestamp=datetime.utcnow().isoformat()
         )
-        route_message(message, args.via)
+        try:
+            route_message(message, args.via)
+            print(f"Message sent successfully to {args.to} via {args.via}.")
+        except Exception as e:
+            print(f"Failed to send message: {e}")
     elif args.command == 'listen':
-        log_devlog(f"[EXECUTION] User ran: ghostwhisper listen --via {args.via}")
-        # For now, listen is stubbed
-        log_devlog(f"[ROUTER] Listen mode selected for transport '{args.via}' - stub implementation")
-        print(f"Listening on transport '{args.via}' (stub)")
+        log_devlog(f"[EXECUTION] User ran: ghostwhisper listen --port {args.port}")
+        print(f"Starting listener on port {args.port}...")
+        log_devlog(f"[LISTENER] Starting FastAPI listener on port {args.port}")
+
+        # Run the FastAPI server as a subprocess
+        try:
+            subprocess.run([
+                sys.executable, "-m", "uvicorn", "src.backend.app:app",
+                "--host", "0.0.0.0",
+                "--port", str(args.port),
+                "--log-level", "info"
+            ])
+        except KeyboardInterrupt:
+            print("Listener stopped by user.")
+            log_devlog("[LISTENER] Listener stopped by user.")
+        except Exception as e:
+            print(f"Listener error: {e}")
+            log_devlog(f"[LISTENER] Listener error: {e}")
 
 if __name__ == '__main__':
     main()
