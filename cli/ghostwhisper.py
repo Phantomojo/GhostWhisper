@@ -1,5 +1,9 @@
 import argparse
 import sys
+from core.discovery import discover_peers, DiscoveryServer
+import threading
+import time
+
 import os
 import subprocess
 from core.router import route_message
@@ -30,6 +34,10 @@ def main():
     listen_parser = subparsers.add_parser('listen', help='Listen for incoming messages')
     listen_parser.add_argument('--port', type=int, default=8000, help='Port to run the listener on (default 8000)')
 
+    # discover command
+    discover_parser = subparsers.add_parser('discover', help='Discover nearby GhostWhisper clients')
+    discover_parser.add_argument('--timeout', type=int, default=5, help='Discovery timeout in seconds')
+
     args = parser.parse_args()
 
     if args.command == 'send':
@@ -50,6 +58,10 @@ def main():
         print(f"Starting listener on port {args.port}...")
         log_devlog(f"[LISTENER] Starting FastAPI listener on port {args.port}")
 
+        # Start discovery server in background
+        discovery_server = DiscoveryServer()
+        discovery_server.start()
+
         # Run the FastAPI server as a subprocess
         try:
             subprocess.run([
@@ -64,6 +76,19 @@ def main():
         except Exception as e:
             print(f"Listener error: {e}")
             log_devlog(f"[LISTENER] Listener error: {e}")
+        finally:
+            discovery_server.stop()
+    elif args.command == 'discover':
+        print(f"Discovering nearby GhostWhisper clients for {args.timeout} seconds...")
+        peers = discover_peers(timeout=args.timeout)
+        if peers:
+            print("Discovered clients:")
+            for peer in peers:
+                print(f" - {peer}")
+        else:
+            print("No clients discovered.")
+    else:
+        parser.print_help()
 
 if __name__ == '__main__':
     main()
