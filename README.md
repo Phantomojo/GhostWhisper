@@ -1,10 +1,14 @@
 # GhostWhisper
 
+<p align="center">
+  <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" alt="GhostWhisper Animation" width="300"/>
+</p>
+
 A stealthy-yet-flexible messaging CLI tool designed for modularity, extensibility, and research-grade logging.
 
 ---
 
-## Phase 1: Foundational Code
+## 🚀 Features
 
 - Modular architecture with `cli/`, `core/`, `transports/`, and `tests/` directories.
 - CLI implemented with `argparse` supporting `send` and `listen` commands.
@@ -12,19 +16,13 @@ A stealthy-yet-flexible messaging CLI tool designed for modularity, extensibilit
 - HTTP transport implemented with retry and logging.
 - Comprehensive logging to `ghostwhisper-devlog.txt` for all actions.
 - Unit and integration tests covering message serialization, transport, routing, and CLI.
-
-## Phase 2: FastAPI Receiver & Listen Command
-
-- FastAPI backend server in `src/backend/app.py` with `/receive` POST endpoint.
-- Async handling of incoming messages with CORS enabled for localhost.
-- CLI `listen` command to start FastAPI server on specified port (default 8000).
-- Incoming messages streamed live in CLI and saved to `received_messages.log`.
-- Graceful shutdown handling and detailed logging of listener events.
-- Thorough backend and integration tests for message receiving and CLI listening.
+- FastAPI backend server with async message handling and CORS support.
+- Automatic client discovery with transport detection.
+- Interactive CLI GUI with chat window and transport selection.
 
 ---
 
-## Installation & Setup
+## 📦 Installation & Setup
 
 1. Clone the repository.
 
@@ -46,13 +44,21 @@ ghostwhisper --help
 
 ---
 
-## Usage
+## 💬 Usage
 
 ### Sending a Message
 
 ```bash
 ghostwhisper send --to http://localhost:8000/receive --via http --message "Hello World"
 ```
+
+Or use the interactive CLI GUI:
+
+```bash
+PYTHONPATH=. python cli/ghostwhisper_gui.py
+```
+
+Type `help` for commands, `discover` to find clients, and `sendauto <target>` to send messages using the best transport.
 
 ### Listening for Messages
 
@@ -66,7 +72,7 @@ ghostwhisper listen --port 8000
 
 ---
 
-## Development & Testing
+## 🧪 Development & Testing
 
 - Run all tests with:
 
@@ -78,7 +84,7 @@ python -m unittest discover tests
 
 ---
 
-## Troubleshooting
+## 🛠 Troubleshooting
 
 - If `ghostwhisper` command is not found, ensure `~/.local/bin` is in your PATH.
 - Use `fix_path_and_reload.sh` to add it for bash or zsh shells.
@@ -86,7 +92,7 @@ python -m unittest discover tests
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 - Fork the repo and create feature branches.
 - Write tests for new features or bug fixes.
@@ -94,23 +100,22 @@ python -m unittest discover tests
 
 ---
 
-## License
+## 🔒 Security
+
+We continuously review and improve security. Please report any issues via GitHub.
+
+---
+
+## 🎨 Visual
+
+Enjoy the animated mascot:
+
+<p align="center">
+  <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Ghost Animation" width="200"/>
+</p>
+
+---
+
+## 📄 License
 
 MIT License
-
----
-
-## Setup Instructions for WSL (Windows Subsystem for Linux)
-
-For setting up GhostWhisper on a Windows PC using WSL, please refer to the detailed instructions in the file [GhostWhisper-WSL-Setup-Instructions.md](./GhostWhisper-WSL-Setup-Instructions.md).
-
----
-
-## ASCII Art
-
-```
-   ____ _               _     _       _                 
-  / ___| |__   ___  ___| | __| | __ _| |_ ___  _ __ ___ 
- | |  _| '_ \ / _ \/ __| |/ _` |/ _` | __/ _ \| '__/ _ \\
- | |_| | | | |  __/ (__| | (_| | (_| | || (_) | | |  __/
-  \____|_| |_|\___|\___|_|\__,_|\__,_|\__\___/|_|  \___|

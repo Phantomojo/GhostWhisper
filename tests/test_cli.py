@@ -36,5 +36,15 @@ class TestCLI(unittest.TestCase):
                     logs = f.read()
                 self.assertIn("[LISTENER] Starting FastAPI listener on port 8000", logs)
 
+    @patch('core.discovery.discover_peers')
+    def test_discover_command(self, mock_discover):
+        mock_discover.return_value = {'192.168.1.2': ['http', 'smtp'], '192.168.1.3': ['qr']}
+        test_args = ['ghostwhisper', 'discover', '--timeout', '3']
+        with patch.object(sys, 'argv', test_args):
+            import cli.ghostwhisper as gw
+            with patch('builtins.print') as mock_print:
+                gw.main()
+                mock_discover.assert_called_once_with(timeout=3)
+
 if __name__ == '__main__':
     unittest.main()

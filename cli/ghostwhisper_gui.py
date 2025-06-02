@@ -43,9 +43,9 @@ class GhostWhisperCLI:
         print(f"Discovering clients for {timeout} seconds...")
         self.discovered_clients = discover_peers(timeout=timeout)
         if self.discovered_clients:
-            print("Discovered clients:")
-            for client in self.discovered_clients:
-                print(f" - {client}")
+            print("Discovered clients with transports:")
+            for client, transports in self.discovered_clients.items():
+                print(f" - {client} (transports: {', '.join(transports)})")
         else:
             print("No clients discovered.")
 
@@ -61,6 +61,19 @@ class GhostWhisperCLI:
             print(f"Message sent to {target} via {via}.")
         except Exception as e:
             print(f"Failed to send message: {e}")
+
+    def send_message_auto(self, target):
+        if target not in self.discovered_clients:
+            print(f"Unknown target {target}. Please discover clients first.")
+            return
+        transports = self.discovered_clients[target]
+        if not transports:
+            print(f"No transports available for {target}.")
+            return
+        # Select best transport (first in list)
+        best_transport = transports[0]
+        message = input(f"Enter message to send to {target} via {best_transport}: ")
+        self.send_message(target, best_transport, message)
 
     def run(self):
         self.start_listener()
@@ -95,11 +108,17 @@ class GhostWhisperCLI:
             via = args[1]
             message = " ".join(args[2:])
             self.send_message(target, via, message)
+        elif cmd == "sendauto":
+            if len(args) < 1:
+                print("Usage: sendauto <target>")
+                return
+            target = args[0]
+            self.send_message_auto(target)
         elif cmd == "clients":
             if self.discovered_clients:
-                print("Discovered clients:")
-                for client in self.discovered_clients:
-                    print(f" - {client}")
+                print("Discovered clients with transports:")
+                for client, transports in self.discovered_clients.items():
+                    print(f" - {client} (transports: {', '.join(transports)})")
             else:
                 print("No clients discovered yet.")
         elif cmd == "exit":
@@ -107,12 +126,14 @@ class GhostWhisperCLI:
         else:
             print(f"Unknown command: {cmd}")
 
+
     def print_help(self):
         print("Commands:")
         print("  help                 Show this help message")
         print("  discover [timeout]   Discover clients on the network")
-        print("  clients              Show discovered clients")
+        print("  clients              Show discovered clients with transports")
         print("  send <target> <via> <message>  Send a message")
+        print("  sendauto <target>    Send message to target using best transport")
         print("  exit                 Exit the CLI GUI")
 
 if __name__ == "__main__":
