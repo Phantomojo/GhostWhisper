@@ -1,1 +1,1 @@
-[2025-06-02T17:28:45.480078] [RECEIVE] Message received from alice to bob\n
+[2025-06-02T20:43:39.899681] [RECEIVE] Message received from alice to bob\n[2025-06-02T20:43:52.047764] [RECEIVE] Message received from test_sender to test_receiver\n

@@ -1,4 +1,4 @@
-#!/home/phantomojo/GhostWhisper/ghostwhisper-env/bin/python3
+#!/home/mikey/GhostWhisper/ghostwhisper-env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/phantomojo/GhostWhisper/ghostwhisper-env
+set -gx VIRTUAL_ENV /home/mikey/GhostWhisper/ghostwhisper-env
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

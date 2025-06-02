@@ -12,7 +12,7 @@ class TestCLI(unittest.TestCase):
         if os.path.exists(LOG_PATH):
             os.remove(LOG_PATH)
 
-    @patch('core.router.route_message')
+    @patch('cli.ghostwhisper.route_message')
     def test_send_command(self, mock_route):
         test_args = ['ghostwhisper', 'send', '--to', 'http://localhost', '--via', 'http', '--message', 'Hello']
         with patch.object(sys, 'argv', test_args):
@@ -25,13 +25,15 @@ class TestCLI(unittest.TestCase):
                     logs = f.read()
                 self.assertIn('User ran: ghostwhisper send', logs)
 
-    def test_listen_command(self):
+    @patch('subprocess.run')
+    def test_listen_command(self, mock_subprocess_run):
+        mock_subprocess_run.return_value = None
         test_args = ['ghostwhisper', 'listen', '--port', '8000']
         with patch.object(sys, 'argv', test_args):
             import cli.ghostwhisper as gw
             with patch('builtins.print') as mock_print:
                 gw.main()
-                mock_print.assert_called_with("Starting listener on port 8000...")
+                mock_print.assert_any_call("Starting listener on port 8000...")
                 with open(LOG_PATH, 'r') as f:
                     logs = f.read()
                 self.assertIn("[LISTENER] Starting FastAPI listener on port 8000", logs)
