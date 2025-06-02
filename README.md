@@ -100,6 +100,12 @@ MIT License
 
 ---
 
+## Setup Instructions for WSL (Windows Subsystem for Linux)
+
+For setting up GhostWhisper on a Windows PC using WSL, please refer to the detailed instructions in the file [GhostWhisper-WSL-Setup-Instructions.md](./GhostWhisper-WSL-Setup-Instructions.md).
+
+---
+
 ## ASCII Art
 
 ```

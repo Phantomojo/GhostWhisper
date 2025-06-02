@@ -1,1 +1,1 @@
-2025-06-01T09:23:51.675172 - From: alice To: bob Content: Hello Bob!\n
+2025-06-01T09:23:51.675172 - From: alice To: bob Content: Hello Bob!\n2025-06-02T15:00:01.806208 - From: test_sender To: test_receiver Content: Integration test message\n

@@ -13,14 +13,17 @@ ghostwhisper.egg-info/entry_points.txt
 ghostwhisper.egg-info/requires.txt
 ghostwhisper.egg-info/top_level.txt
 tests/__init__.py
+tests/test_backend.py
 tests/test_cli.py
 tests/test_config.py
 tests/test_http_retry.py
 tests/test_integration.py
+tests/test_listen_integration.py
 tests/test_logging_completeness.py
 tests/test_message.py
 tests/test_router.py
 tests/test_transports.py
+tests/test_transports_extra.py
 transports/__init__.py
 transports/http.py
 transports/localpipe.py
