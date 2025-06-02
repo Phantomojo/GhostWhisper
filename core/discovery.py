@@ -21,10 +21,12 @@ class DiscoveryServer(threading.Thread):
         while self.running:
             try:
                 data, addr = self.sock.recvfrom(1024)
+                print(f"[DiscoveryServer] Received data from {addr}: {data}")
                 if data == DISCOVERY_MESSAGE:
+                    print(f"[DiscoveryServer] Responding to discovery request from {addr}")
                     self.sock.sendto(RESPONSE_MESSAGE, addr)
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"[DiscoveryServer] Exception: {e}")
 
     def stop(self):
         self.running = False
@@ -35,6 +37,7 @@ def discover_peers(timeout=DISCOVERY_TIMEOUT, broadcast_ip="255.255.255.255", po
     sock.settimeout(timeout)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
+    print(f"[discover_peers] Sending discovery message to {broadcast_ip}:{port}")
     sock.sendto(DISCOVERY_MESSAGE, (broadcast_ip, port))
 
     peers = set()
@@ -42,6 +45,7 @@ def discover_peers(timeout=DISCOVERY_TIMEOUT, broadcast_ip="255.255.255.255", po
     while True:
         try:
             data, addr = sock.recvfrom(1024)
+            print(f"[discover_peers] Received response from {addr}: {data}")
             if data == RESPONSE_MESSAGE:
                 peers.add(addr[0])
         except socket.timeout:
